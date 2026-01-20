@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentos Tributarios Dinámicos</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Enlace a fuente de Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <!-- Links para la librería de redimensión de columnas -->
+    <link rel="stylesheet" href="https://unpkg.com">
+    <script src="https://unpkg.com"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Registro de Documentos</h1>
+        <div class="controls">
+            <input type="file" id="file-input" accept=".csv, .txt">
+            <label for="file-input" class="file-label">Cargar Archivo CSV/TXT</label>
+            <input type="text" id="search-input" placeholder="Buscar en la tabla...">
+            <button id="reset-button" class="reset-button">Resetear</button>
+        </div>
+        <!-- Atributo para habilitar la redimensión -->
+        <table data-rtc-resizable-table="table-registro">
+            <thead>
+                <tr>
+                    <th data-sort-by="Nro">Nro</th>
+                    <th data-sort-by="Tipo Doc">Tipo Doc</th>
+                    <th data-sort-by="Tipo Compr">Tipo Compr</th>
+                    <th data-sort-by="RUT Proveedor">RUT Proveedor</th>
+                    <th data-sort-by="Razón Social">Razón Social</th>
+                    <th data-sort-by="Folio">Folio</th>
+                    <th data-sort-by="Fecha Doct">Fecha Doct</th>
+                    <th data-sort-by="Fecha Reci">Fecha Reci</th>
+                    <th data-sort-by="Fecha Acu">Fecha Acu</th>
+                    <th data-sort-by="Monto Exen">Monto Exen</th>
+                    <th data-sort-by="Monto Neto">Monto Neto</th>
+                    <th data-sort-by="Monto IVA">Monto IVA</th>
+                    <th data-sort-by="Monto IVA NR">Monto IVA NR</th>
+                    <th data-sort-by="Código IVA">Código IVA</th>
+                    <th data-sort-by="Monto Total">Monto Total</th>
+                    <th data-sort-by="Mora">Mora</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Los datos se cargarán aquí dinámicamente -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="10"><strong>Total General:</strong></td>
+                    <td id="total-neto">0</td>
+                    <td id="total-iva">0</td>
+                    <td></td> <!-- Columna vacía -->
+                    <td></td> <!-- Columna vacía -->
+                    <td id="total-total">0</td>
+                    <td></td> <!-- Columna vacía -->
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

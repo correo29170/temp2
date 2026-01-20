@@ -1,0 +1,141 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 100%;
+    overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #0056b3;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead th {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 700;
+    position: sticky;
+    top: 0; /* Mantiene el encabezado fijo al desplazar verticalmente */
+    cursor: pointer; /* Cursor de puntero en los encabezados para indicar que son clickeables */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Efecto de cebra */
+}
+
+tbody tr:hover {
+    background-color: #e9ecef; /* Efecto hover */
+    cursor: pointer;
+}
+
+tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap; /* Evita que el texto se ajuste en celdas estrechas */
+}
+
+/* Estilos para el cargador de archivos y controles */
+.controls {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#file-input {
+    display: none; /* Oculta el input real */
+}
+
+.file-label {
+    background-color: #28a745; /* Color de botón verde */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.file-label:hover {
+    background-color: #218838; /* Efecto hover */
+}
+
+/* Estilos para el campo de búsqueda (filtrado) */
+#search-input {
+    padding: 10px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Estilos para el nuevo botón de Resetear */
+.reset-button {
+    background-color: #dc3545; /* Color de botón rojo */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+    background-color: #c82333;
+}
+
+/* Indicador visual de ordenamiento */
+thead th.sorted-asc::after {
+    content: " ▲";
+}
+
+thead th.sorted-desc::after {
+    content: " ▼";
+}
+
+/* Estilos para el pie de tabla (Totales) */
+tfoot td {
+    background-color: #0056b3; /* Un azul más oscuro para el pie */
+    color: white;
+    font-weight: 700;
+    padding: 12px 15px;
+}
+
+tfoot td:first-child {
+    text-align: right; /* Alinea la etiqueta "Total General" a la derecha */
+}
+/* Estilo para el controlador de redimensión manual */
+.resizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background: transparent; /* Invisible por defecto */
+    cursor: col-resize; /* Cursor de arrastre */
+}
+
+/* Hacer el controlador visible al pasar el mouse por el encabezado */
+th:hover .resizer {
+    background: rgba(0, 0, 0, 0.2); 
+}
