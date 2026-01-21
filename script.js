@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalNetoEl = document.getElementById('total-neto');
     const totalIvaEl = document.getElementById('total-iva');
     const totalTotalEl = document.getElementById('total-total');
+
+    // Constante para el botón de exportar (Debes tener el ID "export-button" en tu HTML)
+    const exportButton = document.getElementById('export-button'); 
     
     let allData = []; // Datos originales
     let currentData = []; // Datos filtrados/ordenados
@@ -25,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderTable(currentData);
                 searchInput.value = '';
             };
-            // Usamos Windows-1252/ISO-8859-1 para compatibilidad con acentos de Excel
             reader.readAsText(file, 'ISO-8859-1');
         }
     });
@@ -37,6 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
         tableHeaders.forEach(th => th.classList.remove('sorted-asc', 'sorted-desc'));
         renderTable(currentData);
     });
+
+    // Evento para el botón de Exportar
+    if (exportButton) { 
+        exportButton.addEventListener('click', () => {
+            exportTableToCSV(currentData);
+        });
+    }
 
     // Buscador Dinámico
     searchInput.addEventListener('input', (e) => {
@@ -59,11 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const valA = (a[index] || '').replace(/\./g, '').replace(',', '.');
                 const valB = (b[index] || '').replace(/\./g, '').replace(',', '.');
                 
-                // Si son números, comparar numéricamente
                 if (!isNaN(valA) && !isNaN(valB) && valA !== "" && valB !== "") {
                     return sortDirection === 'asc' ? valA - valB : valB - valA;
                 }
-                // Si es texto
                 return sortDirection === 'asc' ? 
                     a[index].localeCompare(b[index]) : b[index].localeCompare(a[index]);
             });
@@ -71,9 +78,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Función de exportación a CSV (Excel)
+    function exportTableToCSV(data) {
+        if (data.length === 0) {
+            alert("No hay datos para exportar.");
+            return;
+        }
+
+        const headers = Array.from(document.querySelectorAll('thead th')).map(th => th.textContent);
+        let csvContent = headers.join(';') + '\n';
+
+        data.forEach(row => {
+            let rowString = row.map(cell => `"${cell.toString().replace(/"/g, '""')}"`).join(';');
+            csvContent += rowString + '\n';
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=ISO-8859-1;' });
+        const url = URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'RegistroDeDocumentos.csv');
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
     function parseCSV(text) {
         const lines = text.trim().split(/\r?\n/);
-        // Saltamos la primera línea si parece ser un encabezado
         const start = (lines[0].toLowerCase().includes('rut') || lines[0].toLowerCase().includes('monto')) ? 1 : 0;
         
         return lines.slice(start).map(line => 
@@ -98,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function calculateTotals(data) {
         const clean = (val) => {
             if (!val) return 0;
-            // Quita puntos de miles, cambia coma por punto y limpia espacios
             let n = val.toString().replace(/\./g, '').replace(',', '.').replace(/[^-0-9.]/g, '');
             return parseFloat(n) || 0;
         };
@@ -106,23 +138,20 @@ document.addEventListener('DOMContentLoaded', () => {
         let neto = 0, iva = 0, total = 0;
 
         data.forEach(row => {
-            neto += clean(row[10]); // Columna Monto Neto
-            iva += clean(row[11]);  // Columna Monto IVA
-            total += clean(row[14]); // Columna Monto Total
+            neto += clean(row[10]);
+            iva += clean(row[11]);
+            total += clean(row[14]);
         });
 
-        // Formato moneda chilena 2026
         const fmt = new Intl.NumberFormat('es-CL');
         totalNetoEl.textContent = fmt.format(neto);
         totalIvaEl.textContent = fmt.format(iva);
         totalTotalEl.textContent = fmt.format(total);
     }
-
-
+    
     // *** FUNCIONALIDAD DE REDIMENSIÓN DE COLUMNAS (Añadida al final) ***
 
     function initializeColumnResizing() {
-        // Ejecutamos esto al cargar la página por primera vez
         const headers = document.querySelectorAll('thead th');
         headers.forEach(th => {
             const resizer = document.createElement('div');

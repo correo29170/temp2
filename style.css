@@ -8,11 +8,14 @@ body {
 
 .container {
     max-width: 100%;
-    overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.table-wrapper {
+    overflow-x: auto; 
 }
 
 h1 {
@@ -27,44 +30,50 @@ table {
     margin-top: 20px;
 }
 
+/* AJUSTADO: Encabezado más bajo y letra pequeña */
 thead th {
     background-color: #007bff;
     color: white;
-    padding: 12px 15px;
+    padding: 6px 15px; /* Reducido de 12px a 6px */
     text-align: left;
     font-weight: 700;
+    font-size: 13px;    /* Letra más pequeña */
     position: sticky;
-    top: 0; /* Mantiene el encabezado fijo al desplazar verticalmente */
-    cursor: pointer; /* Cursor de puntero en los encabezados para indicar que son clickeables */
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Efecto de cebra */
-}
-
-tbody tr:hover {
-    background-color: #e9ecef; /* Efecto hover */
+    top: 0;
+    z-index: 15;       /* Corregido: faltaba punto y coma */
     cursor: pointer;
 }
 
-tbody td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
-    white-space: nowrap; /* Evita que el texto se ajuste en celdas estrechas */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-/* Estilos para el cargador de archivos y controles */
+tbody tr:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
+/* AJUSTADO: Celdas de datos más compactas */
+tbody td {
+    padding: 4px 15px;  /* Reducido de 12px a 4px */
+    font-size: 12px;    /* Letra más pequeña */
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+/* Estilos para controles */
 .controls {
     margin-bottom: 15px;
     text-align: center;
 }
 
 #file-input {
-    display: none; /* Oculta el input real */
+    display: none;
 }
 
 .file-label {
-    background-color: #28a745; /* Color de botón verde */
+    background-color: #28a745;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -74,10 +83,9 @@ tbody td {
 }
 
 .file-label:hover {
-    background-color: #218838; /* Efecto hover */
+    background-color: #218838;
 }
 
-/* Estilos para el campo de búsqueda (filtrado) */
 #search-input {
     padding: 10px;
     margin-left: 10px;
@@ -88,9 +96,23 @@ tbody td {
     font-size: 14px;
 }
 
-/* Estilos para el nuevo botón de Resetear */
+.export-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.export-button:hover {
+    background-color: #0056b3;
+}
+
 .reset-button {
-    background-color: #dc3545; /* Color de botón rojo */
+    background-color: #dc3545;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -104,7 +126,6 @@ tbody td {
     background-color: #c82333;
 }
 
-/* Indicador visual de ordenamiento */
 thead th.sorted-asc::after {
     content: " ▲";
 }
@@ -113,29 +134,29 @@ thead th.sorted-desc::after {
     content: " ▼";
 }
 
-/* Estilos para el pie de tabla (Totales) */
+/* AJUSTADO: Pie de tabla compacto */
 tfoot td {
-    background-color: #0056b3; /* Un azul más oscuro para el pie */
+    background-color: #0056b3;
     color: white;
     font-weight: 700;
-    padding: 12px 15px;
+    padding: 6px 15px; /* Reducido de 12px a 6px */
+    font-size: 13px;
 }
 
 tfoot td:first-child {
-    text-align: right; /* Alinea la etiqueta "Total General" a la derecha */
+    text-align: right;
 }
-/* Estilo para el controlador de redimensión manual */
+
 .resizer {
     position: absolute;
     right: 0;
     top: 0;
     height: 100%;
     width: 5px;
-    background: transparent; /* Invisible por defecto */
-    cursor: col-resize; /* Cursor de arrastre */
+    background: transparent;
+    cursor: col-resize;
 }
 
-/* Hacer el controlador visible al pasar el mouse por el encabezado */
 th:hover .resizer {
     background: rgba(0, 0, 0, 0.2); 
 }
